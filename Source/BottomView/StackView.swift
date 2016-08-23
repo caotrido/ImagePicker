@@ -35,6 +35,13 @@ class ImageStackView: UIView {
     return array
     }()
 
+    var iconImageView: UIImageView = {
+        var imageView = UIImageView()
+        imageView.contentMode = UIViewContentMode.Center
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+    
   // MARK: - Initializers
 
   override init(frame: CGRect) {
@@ -42,6 +49,11 @@ class ImageStackView: UIView {
 
     subscribe()
 
+    if let icon = Configuration.wrapperIcon {
+        iconImageView.image = icon
+    }
+    addSubview(iconImageView)
+    
     views.forEach { addSubview($0) }
     addSubview(activityView)
     views.first?.alpha = 1
@@ -87,6 +99,19 @@ class ImageStackView: UIView {
       origin.x += step
       origin.y += step
       view.frame = CGRect(origin: origin, size: viewSize)
+    
+      if let _ = Configuration.wrapperIcon {
+        view.layer.borderColor = UIColor.clearColor().CGColor
+      }
+    }
+    
+    if let _ = Configuration.wrapperIcon {
+        iconImageView.backgroundColor = UIColor(white: 1, alpha: 0.1)
+        iconImageView.frame = views.first?.frame ?? CGRect.zero
+        iconImageView.layer.cornerRadius = iconImageView.frame.width/2
+    }
+    else {
+        iconImageView.backgroundColor = UIColor.clearColor()
     }
   }
 

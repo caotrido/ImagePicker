@@ -44,6 +44,8 @@ public struct Configuration {
 
   // MARK: Images
     
+  public static var wrapperIcon: UIImage? = nil
+  
   public static var indicatorView: UIView = {
     let view = UIView()
     view.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.6)
