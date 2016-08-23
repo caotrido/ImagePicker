@@ -2,9 +2,10 @@ import UIKit
 import MediaPlayer
 import Photos
 
-public protocol ImagePickerDelegate: class {
+@objc public protocol ImagePickerDelegate: class {
 
-  func wrapperDidPress(imagePicker: ImagePickerController, images: [UIImage])
+  optional func wrapperDidPress(imagePicker: ImagePickerController, images: [UIImage])
+  optional func wrapperDidPress(imagePicker: ImagePickerController, assets: [PHAsset])
   func doneButtonDidPress(imagePicker: ImagePickerController, images: [UIImage])
   func cancelButtonDidPress(imagePicker: ImagePickerController)
 }
@@ -342,7 +343,8 @@ extension ImagePickerController: BottomContainerViewDelegate {
 
   func imageStackViewDidPress() {
     let images = AssetManager.resolveAssets(stack.assets)
-    delegate?.wrapperDidPress(self, images: images)
+    delegate?.wrapperDidPress?(self, images: images)
+    delegate?.wrapperDidPress?(self, assets: stack.assets)
   }
 }
 
